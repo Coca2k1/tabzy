@@ -31,17 +31,13 @@ function Tabzy(selector) {
 
     if (this.panels.length !== this.tabs.length) return;
 
+    this._originalHTML = this.container.innerHTML;
+
     this._init();
 }
 
 Tabzy.prototype._init = function () {
-    const tabActive = this.tabs[0];
-    tabActive.closest("li").classList.add("active");
-
-    this.panels.forEach((panel) => (panel.hidden = true));
-
-    const panelActive = this.panels[0];
-    panelActive.hidden = false;
+    this._activeTab(this.tabs[0]);
 
     // Event
     this.tabs.forEach(
@@ -52,6 +48,10 @@ Tabzy.prototype._init = function () {
 Tabzy.prototype._handleTabClick = function (event, tab) {
     event.preventDefault();
 
+    this._activeTab(tab);
+};
+
+Tabzy.prototype._activeTab = function (tab) {
     this.tabs.forEach((tab) => tab.closest("li").classList.remove("active"));
     tab.closest("li").classList.add("active");
 
@@ -64,4 +64,44 @@ Tabzy.prototype._handleTabClick = function (event, tab) {
     const panelActive = document.querySelector(tab.getAttribute("href"));
     panelActive.hidden = false;
     panelActive.classList.add("active");
+};
+
+// input: panel selector or tab element
+Tabzy.prototype.switch = function (input) {
+    let tabToActive = null;
+
+    // 1. input: panel selector
+    if (typeof input === "string") {
+        tabToActive = this.tabs.find(
+            (tab) => tab.getAttribute("href") === input
+        );
+
+        if (!tabToActive) {
+            console.error(`Tabzy: No panel found with ID: "${input}"`);
+            return;
+        }
+    }
+
+    // 2.input: tab element
+    else if (this.tabs.includes(input)) {
+        tabToActive = input;
+    }
+
+    if (!tabToActive) {
+        console.error(`Tabzy: Invalid input "${input}"`);
+        return;
+    }
+
+    this._activeTab(tabToActive);
+};
+
+Tabzy.prototype.destroy = function () {
+    this.container.innerHTML = this._originalHTML;
+
+    this.panels.forEach((panel) => (panel.hidden = false));
+    this.container.closest(".container").classList.add("destroy");
+
+    this.container = null;
+    this.tabs = null;
+    this.panels = null;
 };
