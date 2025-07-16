@@ -63,7 +63,9 @@
         </div>
         <script src="./src/tabzy.js"></script>
         <script>
-            const tabs = new Tabzy(".tabs");
+            const tabs = new Tabzy(".tabs", {
+                remember: false,
+            });
             // tab.destroy()
         </script>
     </body>
