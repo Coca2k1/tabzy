@@ -31,7 +31,8 @@ a {
     height: 70vh;
 }
 
-.tabs {
+.tabs,
+.tabs-3 {
     position: relative;
     display: flex;
     align-items: center;

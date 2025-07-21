@@ -44,21 +44,15 @@ function Tabzy(selector, options = {}) {
 }
 
 Tabzy.prototype._init = function () {
-    // let tabToActivate = null;
-
-    const hash = location.hash;
-    // if (hash) {
-    //     tabToActivate =
-    //         this.tabs.find((tab) => tab.getAttribute("href") === hash) ||
-    //         this.tabs[0];
-    // } else {
-    //     tabToActivate = this.tabs[0];
-    // }
+    const searchParams = new URLSearchParams(location.search);
+    const tabSelector = searchParams.get("tab");
 
     const tabToActivate =
         (this.opt.remember &&
-            hash &&
-            this.tabs.find((tab) => tab.getAttribute("href") === hash)) ||
+            tabSelector &&
+            this.tabs.find(
+                (tab) => tab.getAttribute("href") === tabSelector
+            )) ||
         this.tabs[0];
     this._activateTab(tabToActivate);
 
@@ -88,9 +82,13 @@ Tabzy.prototype._activateTab = function (tab) {
     panelActive.hidden = false;
     panelActive.classList.add("active");
 
-    // hash
+    // searchParams
     if (this.opt.remember) {
-        history.replaceState(null, null, tab.getAttribute("href"));
+        history.replaceState(
+            null,
+            null,
+            `?tab=${encodeURIComponent(tab.getAttribute("href"))}`
+        );
     }
 };
 
