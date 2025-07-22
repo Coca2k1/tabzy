@@ -3,6 +3,7 @@ const $$ = document.querySelectorAll.bind(document);
 
 function Tabzy(selector, options = {}) {
     this.container = document.querySelector(selector);
+    this.selector = selector.replace(/[^a-zA-Z0-9]/g, "");
 
     if (!this.container) {
         console.error(`Tabzy: No container found for selector: '${selector}'`);
@@ -45,13 +46,15 @@ function Tabzy(selector, options = {}) {
 
 Tabzy.prototype._init = function () {
     const searchParams = new URLSearchParams(location.search);
-    const tabSelector = searchParams.get("tab");
+    const tabSelector = searchParams.get(this.selector);
 
     const tabToActivate =
         (this.opt.remember &&
             tabSelector &&
             this.tabs.find(
-                (tab) => tab.getAttribute("href") === tabSelector
+                (tab) =>
+                    tab.getAttribute("href").replace(/[^a-zA-Z0-9]/g, "") ===
+                    tabSelector
             )) ||
         this.tabs[0];
     this._activateTab(tabToActivate);
@@ -84,11 +87,13 @@ Tabzy.prototype._activateTab = function (tab) {
 
     // searchParams
     if (this.opt.remember) {
-        history.replaceState(
-            null,
-            null,
-            `?tab=${encodeURIComponent(tab.getAttribute("href"))}`
+        const params = new URLSearchParams(location.search);
+        params.set(
+            this.selector,
+            tab.getAttribute("href").replace(/[^a-zA-Z0-9]/g, "")
         );
+
+        history.replaceState(null, null, `?${params}`);
     }
 };
 

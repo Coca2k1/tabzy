@@ -12,7 +12,7 @@
     </head>
     <body>
         <div class="container">
-            <ul class="tabs">
+            <ul class="tab1">
                 <li class="tab-btn"><a href="#home">Home</a></li>
                 <li class="tab-btn"><a href="#about">About</a></li>
                 <li class="tab-btn" href="#blogs">
@@ -62,8 +62,9 @@
             </div>
         </div>
 
-        <!-- <div class="container">
-            <ul class="tabs-3">
+        <!-- tab2 -->
+        <div class="container">
+            <ul class="tab2">
                 <li class="tab-btn"><a href="#a">A</a></li>
                 <li class="tab-btn"><a href="#b">B</a></li>
                 <li class="tab-btn">
@@ -73,10 +74,10 @@
                     <a href="#d">D</a>
                 </li>
                 <div class="line"></div>
-            </ul> -->
+            </ul>
 
-        <!-- Panels -->
-        <!-- <div class="tab-content">
+            <!-- Panels -->
+            <div class="tab-content">
                 <div class="content-desc" id="a">
                     <h2>Home</h2>
                     <p>
@@ -110,17 +111,17 @@
                         Dolorem, repellat.
                     </p>
                 </div>
-            </div> -->
-        <!-- </div> -->
+            </div>
+        </div>
         <script src="./src/tabzy.js"></script>
         <script>
-            const tabs = new Tabzy(".tabs", {
+            const tab1 = new Tabzy(".tab1", {
                 remember: true,
             });
 
-            // const tabs3 = new Tabzy(".tabs-3", {
-            //     remember: true,
-            // });
+            const tab2 = new Tabzy(".tab2", {
+                remember: true,
+            });
             // tab.destroy()
         </script>
     </body>
