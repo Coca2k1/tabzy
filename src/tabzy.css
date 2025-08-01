@@ -3,6 +3,10 @@
     margin: 0;
 }
 
+:root {
+    --primary-color: #7360ff;
+}
+
 body {
     box-sizing: border-box;
     display: flex;
@@ -10,6 +14,7 @@ body {
     align-items: center;
     background: #deeeff;
     height: 100vh;
+    gap: 5px;
 }
 
 a {
@@ -28,7 +33,7 @@ a {
 }
 
 .container.destroy {
-    height: 70vh;
+    height: 60vh;
 }
 
 .tab1,
@@ -42,7 +47,6 @@ a {
 }
 
 .tab-btn {
-    position: relative;
     font-size: 22px;
     font-weight: 600;
     color: #919191;
@@ -51,26 +55,38 @@ a {
 }
 
 .tab-btn a {
-    display: block;
+    position: relative;
+    display: inline-block;
     padding: 15px 20px;
     transition: scale 0.1s ease-in-out;
 }
 
-.line {
+.active-line {
     position: absolute;
     top: 50px;
-    left: 22px;
-    width: 90px;
+    left: 20px;
     height: 4px;
     border-radius: 5px;
-    background: #7360ff;
-    transition: all 0.15s ease-in-out;
+    background: var(--primary-color);
+    transition: all 0.2s ease-in-out;
 }
 
-.tab-btn.active a {
+.tab-btn.tab-active a {
     font-weight: 700;
     scale: 1.1;
-    color: #7360ff;
+    color: var(--primary-color);
+}
+
+ul:not(.sliding) .tab-btn.tab-active a::after {
+    display: inline-block;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--primary-color);
+    bottom: 0;
+    left: 0;
 }
 
 .tab-content {
@@ -87,8 +103,8 @@ a {
     margin-bottom: 10px;
 }
 
-.content-desc.active {
-    animation: appear 0.1s ease-in;
+.content-desc.tab-active {
+    animation: appear 0.3s ease-in;
 }
 
 @keyframes appear {

@@ -12,7 +12,7 @@
     </head>
     <body>
         <div class="container">
-            <ul class="tab1">
+            <ul class="tab1 sliding">
                 <li class="tab-btn"><a href="#home">Home</a></li>
                 <li class="tab-btn"><a href="#about">About</a></li>
                 <li class="tab-btn" href="#blogs">
@@ -21,7 +21,7 @@
                 <li class="tab-btn" href="#contact">
                     <a href="#contact">Contact us</a>
                 </li>
-                <div class="line"></div>
+                <div class="active-line" data-tab="tab1"></div>
             </ul>
 
             <!-- Panels -->
@@ -73,7 +73,7 @@
                 <li class="tab-btn">
                     <a href="#d">D</a>
                 </li>
-                <div class="line"></div>
+                <div class="active-line" data-tab="tab2"></div>
             </ul>
 
             <!-- Panels -->
@@ -117,10 +117,17 @@
         <script>
             const tab1 = new Tabzy(".tab1", {
                 remember: true,
+                onChange: (data) => {
+                    console.log("onChange function is runed");
+                    // data.tab, data.panel
+                    console.log(data);
+                },
+                activeLine: true,
             });
 
             const tab2 = new Tabzy(".tab2", {
                 remember: true,
+                // activeLine: true,
             });
             // tab.destroy()
         </script>
